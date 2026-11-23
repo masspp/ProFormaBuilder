@@ -133,3 +133,11 @@ Newer files can be used instead through the system properties `proformabuilder.u
 
 BSD 3-Clause License. See [LICENSE](LICENSE).
 The bundled data are distributed under their own licenses (see [NOTICE](NOTICE)).
+
+## Release note
+* 2026/11/23: released ver 0.1.0
+  * Parse and write ProForma 2.1 strings, and calculate masses, m/z values and fragment ions
+    (based on the ProForma support contributed for GlycanMassUtility)
+  * Unimod modifications are looked up by their titles only, not by their full names
+  * `ProForma.getMz(int)` removes protons for a negative charge, unlike the charge state `/-2` of the string
+  * Added `equals` and `hashCode` to `ProForma`
