@@ -81,12 +81,9 @@ public final class Compositions {
 
 	/** A molecule that only carries a charge (its mass is the electron mass correction). */
 	public static Molecule charge(int z) {
-		if ( z == 0 )
-			return EMPTY;
-		StringBuilder sb = new StringBuilder();
-		for ( int i = 0; i < Math.abs(z); i++ )
-			sb.append(z > 0 ? '+' : '-');
-		return Molecule.parse(sb.toString());
+		// Molecule.parse() reads a leading '-' as the sign of the whole formula, not as a charge,
+		// so a negative charge is made by multiplying a positive one
+		return times(Molecule.parse("+"), z);
 	}
 
 	/**

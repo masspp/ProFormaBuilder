@@ -254,6 +254,29 @@ public class ProFormaTest {
 	}
 
 	@Test
+	public void negativeCharges() {
+		double m = mono("PEPTIDE");
+		double proton = 1.00727646677;
+		double electron = 0.0005486;
+		assertEquals(-1, Compositions.charge(-1).getCharges());
+		assertEquals(electron, Compositions.charge(-1).getMonoisotopicMass().doubleValue(), 1e-9);
+		assertEquals(-3, Compositions.charge(-3).getCharges());
+		assertEquals(3 * electron, Compositions.charge(-3).getMonoisotopicMass().doubleValue(), 1e-9);
+		// [M-H]- and [M-2H]2- written with charge carriers
+		assertEquals(Integer.valueOf(-1), ProForma.parse("PEPTIDE/[H-1:z-1]").getCharge());
+		assertEquals(m - proton, ProForma.parse("PEPTIDE/[H-1:z-1]").getMz().doubleValue(), D);
+		assertEquals(Integer.valueOf(-2), ProForma.parse("PEPTIDE/[H-1:z-1^2]").getCharge());
+		assertEquals(ProForma.parse("PEPTIDE").getMz(-2).doubleValue(),
+				ProForma.parse("PEPTIDE/[H-1:z-1^2]").getMz().doubleValue(), D);
+		assertEquals(Integer.valueOf(-2), ProForma.parse("PEPTIDE/[e-:z-1^2]").getCharge());
+		assertEquals(ProForma.parse("PEPTIDE/-2").getMz().doubleValue(),
+				ProForma.parse("PEPTIDE/[e-:z-1^2]").getMz().doubleValue(), D);
+		// negatively charged formula
+		assertEquals(Integer.valueOf(-1), ProForma.parse("PEPT[Formula:Cl:z-1]IDE").getCharge());
+		assertEquals(m + formula("Cl") + electron, mono("PEPT[Formula:Cl:z-1]IDE"), D);
+	}
+
+	@Test
 	public void mzWithGivenCharge() {
 		double m = mono("PEPTIDE");
 		double proton = 1.00727646677;
