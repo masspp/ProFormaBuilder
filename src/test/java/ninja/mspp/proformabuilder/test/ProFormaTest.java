@@ -289,6 +289,21 @@ public class ProFormaTest {
 	}
 
 	@Test
+	public void equalsAndHashCode() {
+		ProForma p1 = ProForma.parse("EM[Oxidation]EVN[Glycan:HexNAc2Hex3]ES[Phospho]PEK/2");
+		ProForma p2 = ProForma.parse("EM[Oxidation]EVN[Glycan:HexNAc2Hex3]ES[Phospho]PEK/2");
+		assertEquals(p1, p2);
+		assertEquals(p1.hashCode(), p2.hashCode());
+		assertEquals(p1, ProForma.parse("em[Oxidation]evn[Glycan:HexNAc2Hex3]es[Phospho]pek/2"));
+		assertFalse(p1.equals(ProForma.parse("EM[Oxidation]EVN[Glycan:HexNAc2Hex3]ES[Phospho]PEK/3")));
+		assertFalse(p1.equals(ProForma.parse("EMEVN[Glycan:HexNAc2Hex3]ES[Phospho]PEK/2")));
+
+		java.util.Set<ProForma> set = new java.util.HashSet<>();
+		set.add(p1);
+		assertTrue(set.contains(p2));
+	}
+
+	@Test
 	public void specExamplesParseAndRoundTrip() throws IOException {
 		int n = 0;
 		for ( String s : resourceLines("spec_examples.txt") ) {

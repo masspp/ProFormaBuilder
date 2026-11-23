@@ -389,4 +389,24 @@ public final class ProForma implements IMassElement {
 	public String toString() {
 		return ProFormaWriter.write(this.ion);
 	}
+
+	/**
+	 * Two ProForma objects are equal if their parsed structures are equal and they use the same resolver
+	 * (the default resolver when none is given).
+	 * Strings that differ only in notation, e.g. in the case of residues, give equal objects.
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if ( this == o )
+			return true;
+		if ( !(o instanceof ProForma) )
+			return false;
+		ProForma other = (ProForma) o;
+		return this.ion.equals(other.ion) && this.resolver == other.resolver;
+	}
+
+	@Override
+	public int hashCode() {
+		return this.ion.hashCode();
+	}
 }
