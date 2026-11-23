@@ -31,7 +31,7 @@ Add the dependency to your `pom.xml`.
 <dependency>
   <groupId>ninja.mspp</groupId>
   <artifactId>proformabuilder</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
 </dependency>
 ```
 
@@ -98,6 +98,19 @@ public class TestProForma {
 `ProForma` is an `IMassElement` of GlycanMassUtility, so it can also be used with `IonCloud` and `MassUtils`.
 Use `ProForma.parseOrNull` to get `null` for blank input, as the parsers of GlycanMassUtility do.
 
+The charge state of the string gives the ion for `getMz()`.
+Following ProForma 2.1, a charge without charge carriers adds protons for a positive charge
+but electrons for a negative charge.
+Write the charge carriers to get the ions of negative ion mode.
+
+| Ion | ProForma |
+|---|---|
+| [M+2H]<sup>2+</sup> | `PEPTIDE/2` |
+| [M+2Na]<sup>2+</sup> | `PEPTIDE/[Na:z+1^2]` |
+| [M+H+Na]<sup>2+</sup> | `PEPTIDE/[Na:z+1,H:z+1]` |
+| [M-2H]<sup>2-</sup> | `PEPTIDE/[H-1:z-1^2]` |
+| [M+2e]<sup>2-</sup> | `PEPTIDE/-2` |
+
 ## ProForma 2.1 Support
 
 | Compliance level | Feature | Support |
@@ -135,6 +148,9 @@ BSD 3-Clause License. See [LICENSE](LICENSE).
 The bundled data are distributed under their own licenses (see [NOTICE](NOTICE)).
 
 ## Release note
+* 2026/11/23: released ver 0.1.1
+  * Fixed the charge of negative charge carriers (e.g. `/[H-1:z-1^2]`) and negatively charged formulas
+    (e.g. `[Formula:Cl:z-1]`), which was 0 or wrong
 * 2026/11/23: released ver 0.1.0
   * Parse and write ProForma 2.1 strings, and calculate masses, m/z values and fragment ions
     (based on the ProForma support contributed for GlycanMassUtility)
