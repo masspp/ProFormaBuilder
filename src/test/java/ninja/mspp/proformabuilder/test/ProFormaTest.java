@@ -254,6 +254,21 @@ public class ProFormaTest {
 	}
 
 	@Test
+	public void mzWithGivenCharge() {
+		double m = mono("PEPTIDE");
+		double proton = 1.00727646677;
+		// protons are added for a positive charge and removed for a negative charge
+		assertEquals((m + 2 * proton) / 2, ProForma.parse("PEPTIDE").getMz(2).doubleValue(), D);
+		assertEquals((m - 2 * proton) / 2, ProForma.parse("PEPTIDE").getMz(-2).doubleValue(), D);
+		// same as the ion representation of GlycanMassUtility (whose m/z has the sign of the charge)
+		assertEquals(Math.abs(MassUtils.computeMz(ProForma.parse("PEPTIDE"), IonCloud.parse("-2H")).doubleValue()),
+				ProForma.parse("PEPTIDE").getMz(-2).doubleValue(), D);
+		// unlike the charge state /-2 of the string, which adds electrons
+		assertTrue(ProForma.parse("PEPTIDE/-2").getMz().doubleValue() > ProForma.parse("PEPTIDE").getMz(-2).doubleValue());
+		assertThrows("0", new Runnable() { public void run() { ProForma.parse("PEPTIDE").getMz(0); } });
+	}
+
+	@Test
 	public void fragments() {
 		double[] b = {98.06004032, 227.1026334, 324.15539725, 425.20307572, 538.2871397, 653.31408272};
 		double[] y = {148.06043424, 263.08737726, 376.17144124, 477.21911971, 574.27188356, 703.31447664};

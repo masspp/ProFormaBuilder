@@ -40,7 +40,8 @@ import ninja.mspp.proformabuilder.cv.ModificationResolver;
  * <ul>
  *   <li>Modification masses come from compositions (Unimod, PSI-MOD, formula, glycan); a tag with
  *       alternatives {@code [A|B]} uses the first descriptor that has a mass.</li>
- *   <li>Negative charges {@code /-2} add electrons (ProForma 2.1 section 11.5).</li>
+ *   <li>Negative charges {@code /-2} in the string add electrons (ProForma 2.1 section 11.5), while a negative
+ *       charge given to {@link #getMz(int)} removes protons.</li>
  *   <li>B and Z have two possible compositions: {@link #getMonoisotopicMass()} raises an exception and
  *       {@link #getMonoisotopicMassCandidates()} lists all possible masses.</li>
  *   <li>Fragments exclude labile modifications by default.</li>
@@ -304,7 +305,19 @@ public final class ProForma implements IMassElement {
 		return m.getMonoisotopicMass().add(carrierMass).divide(new BigDecimal(Math.abs(z)), MZ_SCALE, RoundingMode.HALF_UP);
 	}
 
-	/** m/z with {@code z} protons added (negative {@code z}: protons removed). */
+	/**
+	 * m/z of the protonated or deprotonated ion, ignoring the charge state of the string.
+	 * <p>
+	 * A positive {@code z} adds {@code z} protons, i.e. [M+zH]<sup>z+</sup>, and a negative {@code z}
+	 * removes {@code -z} protons, i.e. [M-zH]<sup>z-</sup>, as in negative ion mode mass spectrometry.
+	 * Note that a negative charge state in the string (e.g. {@code /-2}) adds electrons instead,
+	 * following ProForma 2.1 section 11.5, so {@link #getMz()} of {@code PEPTIDE/-2} differs from
+	 * {@code getMz(-2)} of {@code PEPTIDE}.
+	 * </p>
+	 * @param z charge, not 0
+	 * @return m/z
+	 * @throws IllegalArgumentException if {@code z} is 0
+	 */
 	public BigDecimal getMz(int z) {
 		if ( z == 0 )
 			throw new IllegalArgumentException("Charge must not be 0");
