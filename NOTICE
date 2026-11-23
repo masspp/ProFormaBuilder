@@ -1,0 +1,17 @@
+ProFormaBuilder
+Copyright (c) 2026, Mass++ Users Group
+
+This software is distributed under the BSD 3-Clause License (see LICENSE).
+It bundles the following third-party data, unmodified, under their own licenses.
+Their source, version, retrieval date and SHA-256 are listed in
+src/main/resources/ninja/mspp/proformabuilder/cv/CV_SOURCES.md.
+
+* Unimod (unimod.xml)
+  http://www.unimod.org/
+  Copyright (C) 2002-2006 Unimod. Distributed under the Design Science License;
+  the license text is in src/main/resources/ninja/mspp/proformabuilder/cv/unimod-LICENSE-DesignScienceLicense.txt.
+
+* PSI-MOD (PSI-MOD.obo)
+  https://github.com/HUPO-PSI/psi-mod-CV
+  PSI-MOD, HUPO Proteomics Standards Initiative. Licensed under CC BY 4.0
+  (https://creativecommons.org/licenses/by/4.0/).

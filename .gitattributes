@@ -1,0 +1,3 @@
+# Bundled controlled vocabularies are kept byte for byte as downloaded
+src/main/resources/ninja/mspp/proformabuilder/cv/unimod.xml -text
+src/main/resources/ninja/mspp/proformabuilder/cv/PSI-MOD.obo -text
