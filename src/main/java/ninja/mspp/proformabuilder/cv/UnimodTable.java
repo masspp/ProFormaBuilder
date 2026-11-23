@@ -25,6 +25,8 @@ import ninja.mspp.proformabuilder.ProFormaFormula;
  * given to {@link ModificationResolver}).
  * Names are looked up with the capitalisation of the CV first; a case-insensitive match is used
  * only when it is unique (ProForma 2.1 section 5).
+ * Only the titles (PSI-MS names or interim names) are used as names (ProForma 2.1 section 6.2.1.2);
+ * the full names are kept for information but are not looked up.
  * </p>
  */
 public final class UnimodTable {
@@ -63,7 +65,6 @@ public final class UnimodTable {
 
 	private final Map<Integer, Entry> byId = new LinkedHashMap<>();
 	private final Map<String, Entry> byTitle = new HashMap<>();
-	private final Map<String, Entry> byFullName = new HashMap<>();
 	private final Map<String, List<Entry>> byLowerName = new HashMap<>();
 	private UnimodTable() { }
 
@@ -131,11 +132,7 @@ public final class UnimodTable {
 		this.byId.put(e.id, e);
 		if ( !this.byTitle.containsKey(e.title) )
 			this.byTitle.put(e.title, e);
-		if ( e.fullName != null && !this.byFullName.containsKey(e.fullName) )
-			this.byFullName.put(e.fullName, e);
 		addLower(e.title, e);
-		if ( e.fullName != null && !e.fullName.equalsIgnoreCase(e.title) )
-			addLower(e.fullName, e);
 	}
 
 	private void addLower(String name, Entry e) {
@@ -148,11 +145,9 @@ public final class UnimodTable {
 		l.add(e);
 	}
 
-	/** Looks up by title, then full name, then a unique case-insensitive match; {@code null} if not found. */
+	/** Looks up by title, then a unique case-insensitive match of titles; {@code null} if not found. */
 	public Entry byName(String name) {
 		Entry e = this.byTitle.get(name);
-		if ( e == null )
-			e = this.byFullName.get(name);
 		if ( e == null ) {
 			List<Entry> l = this.byLowerName.get(name.toLowerCase(Locale.ROOT));
 			if ( l != null ) {

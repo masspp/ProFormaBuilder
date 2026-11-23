@@ -95,6 +95,9 @@ public class ProFormaTest {
 		assertEquals(e, mono("[Phospho]?PEPSTC[Carbamidomethyl]M[Oxidation]K"), D);
 		assertEquals(e, mono("{Phospho}PEPSTC[Carbamidomethyl]M[Oxidation]K"), D);
 		assertEquals(e, mono("pepS[phospho]tc[carbamidomethyl]m[oxidation]k"), D);
+		// Unimod full names (e.g. Phosphorylation for Phospho) are not ProForma names
+		assertThrows("Phosphorylation", new Runnable() { public void run() { mono("PEPS[Phosphorylation]TCMK"); } });
+		assertThrows("phosphorylation", new Runnable() { public void run() { mono("PEPS[phosphorylation]TCMK"); } });
 		assertEquals(e, mono("PEPS[+79.966331]TC[+57.021464]M[+15.994915]K"), 1e-5);
 		assertTrue(ProForma.parse("PEPS[+79.966331]TCMK").isAverageMassApproximate());
 		assertEquals(840.386513, mono("[Acetyl]-PEPTIDE-[Amidated]"), D);
