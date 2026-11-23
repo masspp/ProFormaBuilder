@@ -1,0 +1,34 @@
+# ProForma 2.1 monosaccharide name -> glypy notation, for result comparison tests only (not used for parsing).
+# glypy accepts unknown names silently as "@name" with mass -2.01565 (H-2); every glypy notation below was checked to resolve to a real residue.
+# proforma_name	glypy_notation	glypy_canonical	residue_formula	residue_mono_mass	note
+Hex	Hex	Hex	C6H10O5	162.052823
+HexNAc	HexNAc	HexNAc	C8H13N1O5	203.079373
+HexS	HexS	HexS	C6H10O8S1	242.009638
+HexP	HexP	HexP	C6H11O8P1	242.019154
+HexNAcS	HexNAc(S)	HexNAc(S)	C8H13N1O8S1	283.036187	glypy: HexNAcS is not recognised; write HexNAc(S)
+HexN	HexN	HexN	C6H11N1O4	161.068808
+HexNS	HexNS	HexNS	C6H11N1O7S1	241.025623
+dHex	dHex	d-Hex	C6H10O4	146.057909	glypy writes d-Hex
+aHex	aHex	a-Hex	C6H8O6	176.032088	glypy writes a-Hex
+en,aHex	en,aHex	en,a-Hex	C6H6O5	158.021523	glypy writes en,a-Hex
+Neu	Neu	Neu	C9H15N1O7	249.084852
+NeuAc	NeuAc	Neu5Ac	C11H17N1O8	291.095417	glypy writes Neu5Ac
+NeuGc	NeuGc	Neu5Gc	C11H17N1O9	307.090331	glypy writes Neu5Gc
+Sug	Sug	Sug	C2H2O1	42.010565
+Tri	Tri	Tri	C3H4O2	72.021129
+Tet	Tet	Tet	C4H6O3	102.031694
+Pen	Pen	Pen	C5H8O4	132.042259
+Hep	Hep	Hep	C7H12O6	192.063388
+Oct	Oct	Oct	C8H14O7	222.073953
+Non	Non	Non	C9H16O8	252.084517
+Dec	Dec	Dec	C10H18O9	282.095082
+Fuc	Fuc	Fuc	C6H10O4	146.057909
+Kdo	Kdo	Kdo	C8H12O7	220.058303	glypy: KDO (upper case) is not recognised
+Kdn	Kdn	Kdn	C9H14O8	250.068867	glypy: KDN (upper case) is not recognised
+Sulfo	@sulfate	@sulfate	O3S1	79.956815	substituent; glypy: Sulfo is not recognised
+Phospho	@phosphate	@phosphate	H1O3P1	79.966331	substituent; glypy: Phospho is not recognised
+Neu5Ac	Neu5Ac	Neu5Ac	C11H17N1O8	291.095417	grammar-only name
+Neu5Gc	Neu5Gc	Neu5Gc	C11H17N1O9	307.090331	grammar-only name
+Sulfate	@sulfate	@sulfate	O3S1	79.956815	grammar-only name
+Phosphate	@phosphate	@phosphate	H1O3P1	79.966331	grammar-only name
+S	@sulfate	@sulfate	O3S1	79.956815	grammar-only name
