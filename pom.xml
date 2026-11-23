@@ -3,7 +3,7 @@
 
 	<groupId>ninja.mspp</groupId>
 	<artifactId>proformabuilder</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>0.1.1</version>
 
 	<name>ProFormaBuilder</name>
 	<description>Parser and mass calculator for ProForma 2.1 peptidoform strings</description>
